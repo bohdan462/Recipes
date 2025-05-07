@@ -10,7 +10,7 @@ import SafariServices
 
 struct RecipeCell: View {
     let recipe: Recipe
-    let imageHandler: () async -> UIImage?
+    let imageHandler: (Recipe) async throws -> UIImage?
     
     @State private var image: UIImage?
     
@@ -29,6 +29,8 @@ struct RecipeCell: View {
                             .clipShape(Rectangle())
                     case .failure:
                         Image(systemName: "photo")
+                    @unknown default:
+                        EmptyView()
                     }
                     
                 }
@@ -68,5 +70,5 @@ struct RecipeCell: View {
 }
 
 #Preview {
-    RecipeCell(recipe: Recipe(id: UUID(), cuisine: "British", name: "Apple Pie", photoUrlLarge: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/7276e9f9-02a2-47a0-8d70-d91bdb149e9e/large.jpg")!, photoUrlSmall: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/7276e9f9-02a2-47a0-8d70-d91bdb149e9e/large.jpg")!, sourceUrl: URL(string: "https://www.bbcgoodfood.com/recipes/banana-pancakes")!, youtubeUrl: URL(string: "https://www.youtube.com/watch?v=kSKtb2Sv-_U")!)) {return UIImage(named: "background")}
+    RecipeCell(recipe: Recipe(id: UUID(), cuisine: "British", name: "Apple Pie", photoUrlLarge: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/7276e9f9-02a2-47a0-8d70-d91bdb149e9e/large.jpg")!, photoUrlSmall: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/7276e9f9-02a2-47a0-8d70-d91bdb149e9e/large.jpg")!, sourceUrl: URL(string: "https://www.bbcgoodfood.com/recipes/banana-pancakes")!, youtubeUrl: URL(string: "https://www.youtube.com/watch?v=kSKtb2Sv-_U")!)) {_ in return UIImage(named: "background")}
 }
