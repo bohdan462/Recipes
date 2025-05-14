@@ -19,11 +19,11 @@ enum APIEndpoint {
     var url: URL {
         switch self {
         case .recipes:
-            baseURL.appendingPathComponent("recipes.json")
-            case .malformedData:
-            baseURL.appendingPathComponent("recipes-empty.json")
+            return baseURL.appendingPathComponent("recipes.json")
+        case .malformedData:
+            return baseURL.appendingPathComponent("recipes-empty.json")
         case .emptyData:
-            baseURL.appendingPathComponent("recipes-malformed.json")
+            return baseURL.appendingPathComponent("recipes-malformed.json")
         }
     }
 }

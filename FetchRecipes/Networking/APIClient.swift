@@ -25,22 +25,12 @@ enum NetworkError: LocalizedError {
 }
 
 enum HTTPMethod: String {
-    case get
+    case get = "GET"
 }
 
-protocol APIClient {
-    func request<T: Decodable>(endpoint: APIEndpoint, method: HTTPMethod, response: T.Type) async throws -> T where T: Decodable
-}
-
-extension APIClient {
-    func createUrlRequest(endpoint: APIEndpoint, method: HTTPMethod) -> URLRequest {
-        let url = endpoint.url
-        var request = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-        return request
-    }
+final class APIClient {
     func request<T: Decodable>(endpoint: APIEndpoint, method: HTTPMethod, response: T.Type) async throws -> T {
-       let request = createUrlRequest(endpoint: endpoint, method: method)
+        let request = createUrlRequest(endpoint: endpoint, method: method)
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
@@ -55,14 +45,11 @@ extension APIClient {
             throw NetworkError.decodingFailed(error)
         }
     }
-}
-
-// Using Actor to keep async in a queu of tasks 
-actor NetworkActor: APIClient {
-    static let shared = NetworkActor()
-    private let session: URLSession
     
-    init(session: URLSession = URLSession.shared) {
-        self.session = session
+    private func createUrlRequest(endpoint: APIEndpoint, method: HTTPMethod) -> URLRequest {
+        let url = endpoint.url
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        return request
     }
 }

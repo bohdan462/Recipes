@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FetchRecipesApp: App {
+    private let cache = ImageCacheManager()
+    private let repository = RemoteRecipeRepository()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RecipeListView(repository: repository, cache: cache)
         }
     }
 }
