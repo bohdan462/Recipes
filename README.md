@@ -13,4 +13,4 @@ Weakest Part of the Project -
 The disk cache evicts items purely by a count limit, not by access date or total byte size. A real app would benefit from an LRU policy and perhaps periodic pruning.
 
 Additional Information - 
-All core logic is covered by two XCTest cases: one checks that the image cache is thread‑safe under heavy concurrency, and another verifies that the view model sort and search work as intended. The project contains no third party code or URLCache usage every network request and disk write is managed directly with URLSession and FileManager.
+All core logic is covered by two Test cases: one checks that the image cache is thread‑safe under heavy concurrency, and another verifies that the view model sort and search work as intended. The project contains no third party code or URLCache usage every network request and disk write is managed directly with URLSession and FileManager.
